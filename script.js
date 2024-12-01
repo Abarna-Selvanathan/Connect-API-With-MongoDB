@@ -4,9 +4,9 @@ const API_URL = 'http://localhost:3000/api/admin';
 const fetchOrder = async () => {
   try {
     const response = await fetch(API_URL);
-    const devices = await response.json();
+    const order = await response.json();
     tableBody.innerHTML = '';
-    devices.forEach((order) => {
+    order.forEach((order) => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>${order.customerName}</td>
@@ -19,13 +19,13 @@ const fetchOrder = async () => {
       tableBody.appendChild(row);
     });
   } catch (error) {
-    console.error('Error fetching devices:', error);
+    console.error('Error fetching order:', error);
   }
 };
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const inputs = form.querySelectorAll('input');
-  const deviceData = {
+  const orderData = {
     customerName: inputs[0].value,
     productName: inputs[1].value,
     budget: inputs[2].value,
@@ -38,7 +38,7 @@ form.addEventListener('submit', async (e) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(deviceData),
+      body: JSON.stringify(orderData),
     });
     if (response.ok) {
       alert('Order added successfully!');
@@ -115,6 +115,3 @@ tableBody.addEventListener('click', async (event) => {
   }
 });
 fetchOrder();
-
-
-
